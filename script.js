@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { 
 
     // Configuração dos itens por Kit
     const kitsConfig = {
