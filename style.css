@@ -3,9 +3,12 @@
     --bg: #0d0d0d;
     --gold: #c9a84c;
     --gold-soft: rgba(201, 168, 76, 0.2);
+    --gold-hover: #e0bc6a;
     --text: #f0e8d5;
     --text-muted: #9e8878;
     --card-bg: #111111;
+    --card-border: rgba(201, 168, 76, 0.15);
+    --modal-bg: #0f0f0f;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,211 +27,571 @@ body {
     padding: 0 1.5rem;
 }
 
-/* --- CABEÇALHO (HERO) --- */
+/* --- HERO --- */
 .hero {
     position: relative;
-    padding: 6rem 2rem;
+    padding: 6rem 1.5rem;
     text-align: center;
     border-bottom: 0.5px solid var(--gold-soft);
+    overflow: hidden;
+}
+
+.hero-bg-img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-bg-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.25) saturate(0.6);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.85) 100%);
+}
+
+.hero > *:not(.hero-bg-img) {
+    position: relative;
+    z-index: 1;
 }
 
 .corner {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 30px; height: 30px;
     border-color: var(--gold-soft);
     border-style: solid;
 }
-
-.corner-tl { top: 1.5rem; left: 1.5rem; border-width: 0.5px 0 0 0.5px; }
-.corner-br { bottom: 1.5rem; right: 1.5rem; border-width: 0 0.5px 0.5px 0; }
+.corner-tl { top: 1rem; left: 1rem; border-width: 0.5px 0 0 0.5px; }
+.corner-br { bottom: 1rem; right: 1rem; border-width: 0 0.5px 0.5px 0; }
 
 .brand-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: var(--gold);
     letter-spacing: 0.1em;
     margin: 1rem 0;
 }
 
 .brand-sub {
-    font-size: 0.75rem;
-    letter-spacing: 0.4em;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--text-muted);
 }
 
 .hero-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-style: italic;
-    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-muted);
 }
 
+/* --- BOTÃO CTA PRINCIPAL --- */
 .cta-main {
-    background: transparent;
-    border: 0.5px solid var(--gold);
-    color: var(--gold);
-    padding: 1rem 2.5rem;
-    text-transform: uppercase;
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
     letter-spacing: 0.2em;
-    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 0.9rem 2.4rem;
+    background: transparent;
+    color: var(--gold);
+    border: 0.5px solid var(--gold);
     cursor: pointer;
-    transition: 0.3s;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
-
 .cta-main:hover {
     background: var(--gold);
-    color: var(--bg);
+    color: #0d0d0d;
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
 }
 
 /* --- SEÇÕES --- */
 .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--gold);
-    text-align: center;
     margin-top: 4rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
 }
 
 .section-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2rem;
-    font-weight: 300;
-    text-align: center;
+    font-weight: 400;
     margin-bottom: 2.5rem;
+    text-align: center;
+    color: var(--text);
 }
 
-/* --- PASSOS (COMO FUNCIONA) --- */
+/* --- PASSOS --- */
 .steps-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 4rem;
 }
 
 .step-card {
+    padding: 0 0 2rem 0;
     text-align: center;
-    padding: 2rem;
-    border: 0.5px solid rgba(255,255,255,0.05);
+    border: 0.5px solid var(--card-border);
+    background: var(--card-bg);
+    overflow: hidden;
+}
+
+.step-img-wrap {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.step-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) saturate(0.7);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.step-card:hover .step-img-wrap img {
+    filter: brightness(0.85) saturate(0.9);
+    transform: scale(1.04);
 }
 
 .step-number {
+    display: block;
     font-family: 'Cormorant Garamond', serif;
     font-size: 2.5rem;
-    color: var(--gold-soft);
-    display: block;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 0.5rem;
 }
 
-/* --- GRID DE KITS & ANIMAÇÕES --- */
+.step-card h4 {
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+    padding: 0 1.5rem;
+}
+
+.step-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    padding: 0 1.5rem;
+}
+
+/* --- CATÁLOGO --- */
 .kits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 4rem;
 }
 
 .kit-card {
-    background: var(--card-bg);
-    padding: 2.5rem;
-    border: 0.5px solid rgba(201, 168, 76, 0.1);
-    display: flex;
-    flex-direction: column;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
-    top: 0;
+    text-align: center;
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    transition: border-color 0.3s ease;
+    overflow: hidden;
+    padding-bottom: 2rem;
 }
-
-.kit-card:hover {
-    top: -10px;
-    background: #161616;
-    border-color: var(--gold);
-    box-shadow: 0 10px 30px rgba(201, 168, 76, 0.15);
-}
-
+.kit-card:hover { border-color: var(--gold); }
 .kit-card.featured {
-    border-color: rgba(201, 168, 76, 0.5);
-    transform: scale(1.02);
+    border-color: var(--gold);
+    background: #131208;
 }
 
-.kit-card.featured:hover {
-    transform: scale(1.04);
+.kit-img-wrap {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.kit-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.75) saturate(0.8);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.kit-card:hover .kit-img-wrap img {
+    filter: brightness(0.9) saturate(1);
+    transform: scale(1.05);
+}
+
+.kit-badge {
+    display: inline-block;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 0.5px solid var(--card-border);
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1.2rem;
+}
+.kit-badge.highlight {
+    color: var(--gold);
+    border-color: var(--gold);
 }
 
 .kit-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    color: var(--gold);
-    margin: 0.5rem 0 1rem;
-    font-weight: 300;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    padding: 0 2rem;
+}
+
+.kit-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    padding: 0 2rem;
 }
 
 .kit-price {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2rem;
-    margin: 1rem 0;
-}
-
-.wa-btn {
-    text-align: center;
-    padding: 1.1rem;
-    border: 0.5px solid var(--gold);
     color: var(--gold);
-    text-decoration: none;
-    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+    padding: 0 2rem;
+}
+
+/* --- BOTÃO WA (padrão: borda dourada) --- */
+.wa-btn {
+    display: inline-block;
+    width: calc(100% - 4rem);
+    margin: 0 2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    transition: 0.3s;
+    padding: 0.9rem 1.2rem;
+    background: transparent;
+    color: var(--gold);
+    border: 0.5px solid var(--gold);
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
-
 .wa-btn:hover {
-    background: rgba(201, 168, 76, 0.1);
-}
-
-.gold-bg {
     background: var(--gold);
-    color: var(--bg);
+    color: #0d0d0d;
+    box-shadow: 0 0 18px rgba(201, 168, 76, 0.28);
 }
 
-/* --- TESTEMUNHOS & FAQ --- */
-.testimonials {
-    background: #0a0a0a;
-    padding: 4rem 0;
-    margin: 4rem 0;
+/* --- BOTÃO WA GOLD (featured card) --- */
+.wa-btn.gold-bg {
+    background: var(--gold);
+    color: #0d0d0d;
+    border-color: var(--gold);
+}
+.wa-btn.gold-bg:hover {
+    background: var(--gold-hover);
+    border-color: var(--gold-hover);
+    box-shadow: 0 0 22px rgba(201, 168, 76, 0.4);
 }
 
-.testimonial-card {
-    text-align: center;
-    font-style: italic;
-    font-size: 1.2rem;
+/* --- MODAL OVERLAY --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+}
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--modal-bg);
+    border: 0.5px solid var(--gold);
+    width: 100%;
+    max-width: 540px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- FECHAR MODAL --- */
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+.close-modal:hover { color: var(--gold); }
+
+/* --- HEADER DO MODAL --- */
+.modal-header {
+    margin-bottom: 1.8rem;
+}
+
+.modal-brand-sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+}
+
+.modal-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.step-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.step-dots {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--card-border);
+    border: 0.5px solid var(--text-muted);
+    transition: background 0.3s;
+}
+.dot-active {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+.dot-done {
+    background: rgba(201, 168, 76, 0.4);
+    border-color: var(--gold);
+}
+
+.step-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
     color: var(--text-muted);
 }
 
-.faq-container {
-    max-width: 700px;
-    margin: 0 auto 5rem;
-}
-
-details {
-    border-bottom: 0.5px solid var(--gold-soft);
-    padding: 1.5rem 0;
-    cursor: pointer;
-}
-
-summary {
-    color: var(--gold);
+/* --- TÍTULO DO PASSO --- */
+.step-title {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
     font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
 }
 
-.footer {
-    padding: 4rem;
+/* --- GRID DE OPÇÕES --- */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+}
+
+/* --- CARD DE OPÇÃO --- */
+.option-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1rem 0.8rem;
+    border: 0.5px solid var(--card-border);
+    background: #0d0d0d;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    text-align: center;
+}
+.option-card:hover {
+    border-color: var(--gold);
+    background: var(--gold-soft);
+}
+.option-card.selected {
+    border-color: var(--gold);
+    background: var(--gold-soft);
+}
+
+.option-check {
+    font-size: 0.8rem;
+    color: var(--gold);
+    height: 1rem;
+    line-height: 1;
+}
+
+.option-label {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+/* --- SHAKE para seleção obrigatória --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+}
+.shake { animation: shake 0.45s ease; }
+
+/* --- FOOTER DO MODAL --- */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    border-top: 0.5px solid var(--card-border);
+    padding-top: 1.2rem;
+}
+
+/* --- BOTÕES DE NAVEGAÇÃO DO MODAL --- */
+.btn-nav {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.4rem;
+    cursor: pointer;
+    border: 0.5px solid transparent;
+    transition: all 0.25s ease;
+}
+
+/* Botão Voltar */
+.btn-prev {
+    background: transparent;
+    color: var(--text-muted);
+    border-color: var(--card-border);
+}
+.btn-prev:not(:disabled):hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+}
+.btn-prev:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* Botão Próximo / Finalizar */
+.btn-next {
+    background: transparent;
+    color: var(--gold);
+    border-color: var(--gold);
+    flex: 1;
+    text-align: center;
+}
+.btn-next:hover,
+.btn-next.btn-ready {
+    background: var(--gold);
+    color: #0d0d0d;
+    box-shadow: 0 0 16px rgba(201, 168, 76, 0.3);
+}
+
+/* --- TESTEMUNHOS --- */
+.testimonials {
+    padding: 4rem 0;
     text-align: center;
     border-top: 0.5px solid var(--gold-soft);
+    border-bottom: 0.5px solid var(--gold-soft);
+    margin: 2rem 0;
+}
+
+.testimonial-card {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.testimonial-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.testimonial-card cite {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+/* --- RODAPÉ --- */
+.footer {
+    padding: 3rem 1.5rem;
+    text-align: center;
 }
 
 .brand-name-small {
     font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
     color: var(--gold);
-    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.2rem;
+}
+
+.footer .brand-sub { margin-bottom: 1rem; }
+
+.footer p:last-child {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 600px) {
+    .brand-name { font-size: 2.5rem; }
+    .hero-tagline { font-size: 1rem; }
+    .section-title { font-size: 1.6rem; }
+    .kit-title, .kit-price { font-size: 1.5rem; }
+    .testimonial-card p { font-size: 1rem; }
+    .brand-name-small { font-size: 1.4rem; }
+    .modal-content { padding: 2rem 1.2rem; }
+    .options-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    .modal-footer { flex-direction: column; }
+    .btn-prev { order: 2; }
+    .btn-next { order: 1; }
 }
